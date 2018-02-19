@@ -55,8 +55,8 @@
 </div>
 </br></br></br>
 <form class="randomFill_form" action="<?php echo $config->getProjPath() ?>/process.php" method="post">
-  <textarea name="fill_nb" rows="5" cols="300" placeholder="This form will add random sequence of X numbers X times in DB using each algorithm, for better comparison purposes (X is for you to choose here, 100 max. /!\ Don't use excessively please /!\)."></textarea></br>
-  <input type="submit" name="fill_submit" value="Click here after having entered a number between 1 and 100">
+  <textarea name="fill_nb" rows="5" cols="300" placeholder="This form will add random sequence of X numbers X times in DB using each algorithm, for better comparison purposes (X is for you to choose here, 150 max. /!\ Don't use excessively please /!\)."></textarea></br>
+  <input type="submit" name="fill_submit" value="Click here after having entered a number between 1 and 150">
 </form>
     <?php
     if (isset($_SESSION['error']) && !empty($_SESSION['error'])) // Display error if there was one during sequence processing
@@ -82,8 +82,8 @@
       echo ("</br>This sequence contained ".$_SESSION['nb']." numbers,
       had a cost of ".$_SESSION['cost']." and executed itself in ".$_SESSION['time']." seconds.");
 
-      echo ("</br>Cost by number in sequence : ".$_SESSION['cost']/$_SESSION['nb']);
-      echo ("</br>Time by number in sequence : ".$_SESSION['time']/$_SESSION['nb']);
+      echo ("</br>Cost by number in sequence : ".$_SESSION['cost']/$_SESSION['nb'].".");
+      echo ("</br>Time by number in sequence : ".$_SESSION['time']/$_SESSION['nb'] . " seconds.");
     }
     session_unset();
     session_destroy();

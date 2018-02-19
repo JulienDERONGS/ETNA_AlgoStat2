@@ -67,69 +67,17 @@ class             DB extends SingletonFactory
     return (TRUE);
   }
 
-  function          getTimesBySortType($type)
-  {
-    $conn = $this->connect();
-    $stmt = $conn->prepare("SELECT  s.`stat_time`
-                            FROM    `Stat` s, `Sort_type` st
-                            WHERE   st.`sort_type_id` = s.`FK_sort_type_id`
-                            AND     `sort_type_name` = :type
-                            ");
-    $stmt->bindParam(":type", $type, PDO::PARAM_STR);
-    $stmt->execute();
-    $time = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    $conn = NULL;
-    return (json_encode($time));
-  }
-
-  function          getCostsBySortType($type)
-  {
-    $conn = $this->connect();
-    $stmt = $conn->prepare("SELECT  s.`stat_cost`
-                            FROM    `Stat` s, `Sort_type` st
-                            WHERE   st.`sort_type_id` = s.`FK_sort_type_id`
-                            AND     `sort_type_name` = :type
-                            ");
-    $stmt->bindParam(":type", $type, PDO::PARAM_STR);
-    $stmt->execute();
-    $cost = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    $conn = NULL;
-    return (json_encode($cost));
-  }
-
-  function          getTimesAndCostsBySortType($type)
-  {
-    $conn = $this->connect();
-    $stmt = $conn->prepare("SELECT  s.`stat_time`
-                            FROM    `Stat` s, `Sort_type` st
-                            WHERE   st.`sort_type_id` = s.`FK_sort_type_id`
-                            AND     `sort_type_name` = :type
-                            ");
-    $stmt->bindParam(":type", $type, PDO::PARAM_STR);
-    $stmt->execute();
-    $time = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-    $stmt = $conn->prepare("SELECT  s.`stat_cost`
-                            FROM    `Stat` s, `Sort_type` st
-                            WHERE   st.`sort_type_id` = s.`FK_sort_type_id`
-                            AND     `sort_type_name` = :type
-                            ");
-    $stmt->bindParam(":type", $type, PDO::PARAM_STR);
-    $stmt->execute();
-    $cost = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    $conn = NULL;
-    $i = 0;
-    while (isset($time[$i]) && isset($cost[$i]))
-    {
-      $tc[$i] = $time[$i] * $cost[$i];
-      $i++;
-    }
-    return (json_encode($tc));
-  }
-
-  // Using Mersenne Twister algorithm (100 times max per algorithm)
+  /*** Adds a random sequence (between 0 and $t numbers) of random float
+  **** numbers $t times in DB, using each algorithm, for better comparison purposes
+  **** (150 times max, the server can't support more apparently)
+  ***/
   function          fillRandomSequencesIntoDB($timesUsingEachSortType)
   {
+    function        random_float ($min, $max)
+    {
+      return ($min + lcg_value() * (abs($max - $min)));
+    }
+
     $str = "";
     $db = DB::getInstance();
     $db->connect();
@@ -137,22 +85,31 @@ class             DB extends SingletonFactory
     // Security checks
     $t = intval($timesUsingEachSortType, 10);
     unset($timesUsingEachSortType);
-    if ($t > 100 || $t < 1)
+    if ($t > 150)
     {
-      $t = 100;
+      $t = 150;
+    }
+    elseif ($t < 1)
+    {
+      $t = 1;
     }
 
-    // Adds random sequence of $t numbers $t times in DB using each algorithm, for better comparison purposes
-    for ($i = 0; $i < 3; $i++)
+    for ($i = 0; $i < 7; $i++)
     {
       if ($i == 0) $sort_type = "insertion";
       if ($i == 1) $sort_type = "selection";
       if ($i == 2) $sort_type = "bubble";
+      if ($i == 3) $sort_type = "shell";
+      if ($i == 4) $sort_type = "quick";
+      if ($i == 5) $sort_type = "comb";
+      if ($i == 6) $sort_type = "merge";
       for ($j = 0; $j < $t; $j++)
       {
-        for ($k = 0; $k < $t; $k++)
+        $str = "";
+        $nb = mt_rand(2, $t);
+        for ($k = 0; $k < $nb; $k++)
         {
-          $str .= strval(mt_rand(-42000, 42000)) . "";
+          $str .= strval(random_float(-500, 500)) . " ";
         }
         // Convert to float and sort the string
         $sort = new Sort($str);
@@ -161,11 +118,67 @@ class             DB extends SingletonFactory
         // Add the sorted sequence into the DB
         $db->add_data($sort, $sort_type);
 
-        // Empty $str and unset $sort for the next use
-        $str = "";
+        // Unset $sort for the next use
         unset($sort);
       }
     }
+  }
+
+  protected function       averageTimeCostByNb($raw_sorted_stats)
+  {
+    if (!isset($raw_sorted_stats[0]))
+    {
+      return (NULL);
+    }
+    $i = 0;
+    $j = 0;
+    $nb = $raw_sorted_stats[0]['stat_total_nb'];
+    $sum_times = 0;
+    $sum_costs = 0;
+    $averaged_stats = array(array());
+
+    while (isset($raw_sorted_stats[0]))
+    {
+      if ($raw_sorted_stats[0]['stat_total_nb'] == $nb)
+      {
+        $sum_times += $raw_sorted_stats[0]['stat_time'];
+        $sum_costs += $raw_sorted_stats[0]['stat_cost'];
+        $i++;
+        array_shift($raw_sorted_stats);
+      }
+      else
+      {
+        $averaged_stats[$j] = array(
+                                "nb" => $nb,
+                                "time" => ($sum_times / $i),
+                                "cost" => ($sum_costs / $i));
+        $nb = $raw_sorted_stats[0]['stat_total_nb'];
+        $sum_times = 0;
+        $sum_costs = 0;
+        $i = 0;
+        $j++;
+      }
+      //echo "nb = $nb\nsum_times = $sum_times\nsum_costs = $sum_costs\n";
+    }
+    return ($averaged_stats);
+  }
+
+  ***REMOVED*** function          getJsonAvgStatsBySortType($type)
+  {
+    $raw_sorted_stats = array(array());
+    $conn = $this->connect();
+
+    // Insert all stats in an array
+    $stmt = $conn->prepare("SELECT    s.`stat_total_nb`, s.`stat_time`, s.`stat_cost`
+                            FROM      `Stat` s, `Sort_type` st
+                            WHERE     st.`sort_type_id` = s.`FK_sort_type_id`
+                            AND       `sort_type_name` = :type
+                            ORDER BY  s.`stat_total_nb` ASC
+                            ;");
+    $stmt->bindParam(":type", $type, PDO::PARAM_STR);
+    $stmt->execute();
+    $raw_sorted_stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return (json_encode($this->averageTimeCostByNb($raw_sorted_stats), JSON_PRETTY_PRINT));
   }
 }
 ?>

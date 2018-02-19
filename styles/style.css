@@ -71,7 +71,6 @@ footer
 
 h2
 {
-
     color: #fff;
     text-rendering: geometricPrecision;
     font-family: Helvetica, "sans-serif";
@@ -80,7 +79,7 @@ h2
 }
 
 
-.algo_form
+.algo_form .graphs_header
 {
     z-index: 0;
     padding:0.6rem;
@@ -97,6 +96,7 @@ h2
     margin: 10px;
 
 }
+
 /*E6E9EC*/
 .title
 {

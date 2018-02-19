@@ -13,13 +13,12 @@
   $autoloader = new Autoloader();
 
   // Fill form processing
-  if (isset($_POST['fill_submit']) && isset($_POST['fill_nb'])
-    && intval($_POST['fill_nb']) > 0 && intval($_POST['fill_nb']) <= 100)
+  if (isset($_POST['fill_submit']) && isset($_POST['fill_nb']))
     {
       $_SESSION['error'] = "Fill process started"; // Security
       $db = DB::getInstance();
       $db->connect();
-      $db->fillRandomSequencesIntoDB($_POST['fill_nb']);
+      $db->fillRandomSequencesIntoDB(intval($_POST['fill_nb']));
       $_SESSION['error'] = "Fill successfully done !";
       header("Location: index.php");
     }

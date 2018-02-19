@@ -257,7 +257,6 @@ class             Sort
     return ($this->getSortedArray());
   }
 
-  // O(n log n)
   protected function merge($seq)
   {
     // Initialize stats during first iteration
