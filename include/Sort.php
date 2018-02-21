@@ -1,5 +1,4 @@
 <?php
-// TODO: ALL JAVADOC
 class             Sort
 {
   private         $str;

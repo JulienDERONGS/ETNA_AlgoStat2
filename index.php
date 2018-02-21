@@ -14,7 +14,6 @@
     <meta name="theme-color" content="#ffffff">
     <link href="styles/style.css" rel="stylesheet" type="text/css">
     <?php
-    // IMPORTANT TODO : Clean all debugs
       // Initialize classes and session
       session_start();
       require_once "include/Autoloader.php";
@@ -22,21 +21,18 @@
       $config = Config::getInstance();
       $db = DB::getInstance();
       $db->connect();
-      /////////////// DEBUG
-      ini_set('display_errors', 1);
-      ini_set('display_startup_errors', 1);
-      error_reporting(E_ALL);
-      ///////////////
     ?>
   </head>
   <body>
     <!-- Header -->
- <section><h1>AlgoStat2 : Algorithms time and cost comparisons</h1></section>
-<div class="algo_form">
-        <div class="heading">
-            <a href="index.php">SORT</a>
-            <a href="graphs.php">GRAPHS</a>
-        </div>
+    <section><h1>AlgoStat2 : Algorithms' time and cost comparisons</h1></section>
+    <div class="algo_form">
+      <div class="heading">
+          <a href="index.php">SORT</a>
+          <a href="graphs.php">GRAPHS</a>
+      </div>
+
+    <!-- Sorting form -->
     <form action="<?php echo $config->getProjPath() ?>/process.php" method="post">
         Sort type :</br>
         <select name="type">
@@ -52,8 +48,8 @@
         <textarea name="sequence" rows="10" cols="80" placeholder="Any character can be written here, only integers and floats will be treated.&#13;&#10;Sequence exemple : cjebc33.3e4 r'8 ,,3,2;;-9.0-1"></textarea></br></br>
         <input type="submit" name="submit" value="Sort">
     </form>
-</div>
-</br></br></br>
+  </div></br></br></br>
+
 <form class="randomFill_form" action="<?php echo $config->getProjPath() ?>/process.php" method="post">
   <textarea name="fill_nb" rows="5" cols="300" placeholder="This form will add random sequence of X numbers X times in DB using each algorithm, for better comparison purposes (X is for you to choose here, 150 max. /!\ Don't use excessively please /!\)."></textarea></br>
   <input type="submit" name="fill_submit" value="Click here after having entered a number between 1 and 150">
@@ -87,10 +83,10 @@
     }
     session_unset();
     session_destroy();
-    ?>
+    ?></br></br></br>
 
 <footer>
-    <h2>Gabriel Cabanes, Julien Derongs, Sarah Al Janabi, 2018</h2>
+    <h2>Sarah Al Janabi, Gabriel Cabanes, Julien Derongs, 2018</h2>
 </footer>
   </body>
 </html>

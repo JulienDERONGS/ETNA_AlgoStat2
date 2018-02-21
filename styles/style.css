@@ -43,7 +43,7 @@ section h1
     text-rendering: geometricPrecision;
     font-family: 'Roboto Slab', "sans-serif";
     text-shadow: 0 0 3px rgba(0,0,0,0.9);
-    font-size: 35pt;
+    font-size: 45pt;
     padding: 0.6rem;
 }
 
@@ -66,7 +66,6 @@ footer
     right: 0;
     background: url("bright-squares.png") #337AB7;
     border-top: 5px solid #F0AD4E;
-
 }
 
 h2
@@ -94,7 +93,6 @@ h2
     font-size: 9pt;
     justify-content: center;
     margin: 10px;
-
 }
 
 /*E6E9EC*/
@@ -206,6 +204,8 @@ textarea:focus
     width: 100%;
     height: 5%;
     text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #337AB7;
 }
 
 .heading a {
@@ -213,9 +213,15 @@ textarea:focus
     color: #F0AD4E;
     font-family: fantasy;
     font-weight: bolder;
-    font-size: 15pt;
+    font-size: 30pt;
     padding-left: 3%;
     padding-right: 3%;
+    transition: all 0.5s ease-in-out;
+
+}
+
+.heading a:hover {
+  color: #000000;
 }
 
 .sort_error {

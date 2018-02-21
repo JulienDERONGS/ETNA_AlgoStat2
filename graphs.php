@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>AlgoStat2 : Algorithms time and cost comparisons</title>
+    <title>AlgoStat2 : Algorithms' time and cost comparisons</title>
     <link href="styles/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Open+Sans|Roboto+Slab|Ubuntu+Condensed" rel="stylesheet">
     <script src="include/js/echarts.js"></script>
@@ -30,12 +30,13 @@
 
     <!-- Readme -->
     <div class=readme>
-      Each sort in the raphs can be activated/deactivated by clicking on their names,
+      The graphs are showing data of previously done sorts, which data is stored in the database.
+    </br>Each sort type in the graphs can be activated/deactivated by clicking on their names,
       </br>at the top of each graph, for a better readability.
-    </br>Graphs can be downloaded as images, by clicking on the arrow at the top-right corner.</br>
+      </br>Graphs can be downloaded as images, by clicking on the arrow at the top-right corner.</br>
       </br>X axis : How many numbers were used in the sorted sequence.
       </br>Y axis [Time graphs] : How much time (in seconds) did the sorting take.
-    </br>Y axis [Cost graphs] : How many iterations through the sequence did the sorting take.</br></br></br>
+      </br>Y axis [Cost graphs] : How many iterations through the sequence did the sorting take.</br></br></br>
     </div>
 
     <!-- prepare DOM containers for the graphs to be displayed in -->
@@ -770,6 +771,9 @@
       };
       // Use configuration options and data specified to render the graph
       chart_merge_cost.setOption(options_merge_cost);
-  </script>
+  </script></br></br></br>
   </body>
+  <footer>
+      <h2>Sarah Al Janabi, Gabriel Cabanes, Julien Derongs, 2018</h2>
+  </footer>
 </html>

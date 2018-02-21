@@ -158,7 +158,6 @@ class             DB extends SingletonFactory
         $i = 0;
         $j++;
       }
-      //echo "nb = $nb\nsum_times = $sum_times\nsum_costs = $sum_costs\n";
     }
     return ($averaged_stats);
   }

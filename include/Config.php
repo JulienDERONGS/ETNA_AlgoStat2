@@ -4,6 +4,8 @@
  */
 class                       Config extends SingletonFactory
 {
+  // Server address :       95.85.29.173/algostat2
+  // Database :             95.85.29.173/phpmyadmin
   private static            $path = "/var/www/html/algostat2";
   private static            $proj_path = "/algostat2";
   private static            $ip = "localhost";
