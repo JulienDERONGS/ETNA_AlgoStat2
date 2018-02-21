@@ -221,3 +221,17 @@ textarea:focus
 .sort_error {
   color: red;
 }
+
+.graphs {
+  /*display: table;*/
+  display: flex;
+}
+
+.side {
+  display: inline;
+}
+
+.readme {
+  padding-top: 1em;
+  text-align: center;
+}
