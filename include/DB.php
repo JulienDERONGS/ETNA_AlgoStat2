@@ -162,7 +162,7 @@ class             DB extends SingletonFactory
     return ($averaged_stats);
   }
 
-  ***REMOVED*** function          getJsonAvgStatsBySortType($type)
+  public function          getJsonAvgStatsBySortType($type)
   {
     $raw_sorted_stats = array(array());
     $conn = $this->connect();

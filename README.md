@@ -16,7 +16,7 @@ You will also be able to fill the database with any sequence of X random numbers
 On the "GRAPHS" page, accessible from the link on top of the page, are graphs of each type of algorithm. They are here to show, preferably with large samples, how much does each costs, both in terms of time and iterations. They will treat all data already in the database, so the more sorts that were performed, the more accurate will the graphs be (the random sequences generator was implemented to ease this process).
 
 ## As an administrator (if you wish to check that the code & database are the same as in the SVN repository)
-Server : ssh ***REMOVED***@95.85.29.173 (Password: ***REMOVED***)
+Server : ssh ******@95.85.29.173 (Password: ******)
   The project folder is in /var/www/html/algostat2
-Database (User: ***REMOVED*** / Password: ***REMOVED***) : http://95.85.29.173/phpmyadmin
+Database (User: ****** / Password: ******) : http://95.85.29.173/phpmyadmin
   The database used is algostat2.

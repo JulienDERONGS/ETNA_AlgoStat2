@@ -10,8 +10,8 @@ class                       Config extends SingletonFactory
   private static            $proj_path = "/algostat2";
   private static            $ip = "localhost";
   private static            $dbname ="algostat2_db";
-  private static            $username = "***REMOVED***";
-  private static            $password = "***REMOVED***";
+  private static            $username = "root";
+  private static            $password = "etnaDev";
 
   function __destruct()
   {
